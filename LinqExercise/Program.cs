@@ -1,12 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LinqExercise
 {
     class Program
     {
         //Static array of integers
+        static void Display (int[] numbers) {
+            foreach (int i in numbers) {
+                Console.Write(i);
+                Console.Write("-");
+            }
+            Console.Write("\n");
+        }
+        static void Display (Employee[] numbers) {
+            foreach (Employee i in numbers) {
+                Console.Write(i);
+                Console.Write("-");
+            }
+            Console.Write("\n");
+        }
+        static void Display (List<Employee> numbers) {
+            foreach (Employee i in numbers) {
+                Console.Write(i.FirstName);
+                Console.Write("-");
+            }
+            Console.Write("\n");
+        }
+        static void Display (List<int> numbers) {
+            foreach (int i in numbers) {
+                Console.Write(i);
+                Console.Write("-");
+            }
+            Console.Write("\n");
+        }
         private static int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
 
         static void Main(string[] args)
@@ -21,31 +51,57 @@ namespace LinqExercise
              */
 
             //TODO: Print the Sum of numbers
+            Console.WriteLine(numbers.Sum());
 
             //TODO: Print the Average of numbers
+            Console.WriteLine(numbers.Average());
 
-            //TODO: Order numbers in ascending order and print to the console
+            //TODO: Order numbers in ascending order and print to the console\
+            Array.Sort(numbers);
+            Display(numbers);
 
             //TODO: Order numbers in descending order and print to the console
+            Array.Reverse(numbers);
+            Display(numbers);
 
             //TODO: Print to the console only the numbers greater than 6
+            Display(numbers.Where(n => n > 6).ToList());
 
             //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
+            Array.Sort(numbers);
+            Display(numbers.ToList().GetRange(0,4));
 
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
+            numbers[3] = 10;
+            Array.Sort(numbers);
+            Array.Reverse(numbers);
+            Display(numbers);
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
 
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in ascending order by FirstName.
-
+            List<Employee> special = employees.Where(x => x.FirstName[0] == 'C' || x.FirstName[0] == 'S').OrderByDescending(x => x.FirstName).Reverse().ToList();
+            Display(employees);
+            
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
+            List<Employee> overTwentySix = employees.Where(x => x.Age > 26).OrderByDescending(x => x.FirstName).Reverse().ToList();
+            foreach (Employee i in overTwentySix) {
+                Console.Write($"{i.FirstName},{i.Age}\t");
+            }
+            Console.Write("\n");
 
             //TODO: Print the Sum of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
+            int sumOfYOE = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35).Sum(x=> x.YearsOfExperience);
+            Console.WriteLine($"The years of experience of all employees that at 35 and up AND have worked for at least 10 years is {sumOfYOE} years!");
 
-            //TODO: Now print the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
+            //TODO: Now print the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 years AND Age is greater than 35.
+            double experiencedAverage = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35).Average(x=> x.YearsOfExperience);
+            Console.WriteLine($"The average years of experience of all employees that at 35 and up AND have worked for at least 10 years is {experiencedAverage} years!");
+
 
             //TODO: Add an employee to the end of the list without using employees.Add()
+            employees.AddRange(new List<Employee>() {(new Employee("Bob", "Ross", 25, 10))});
 
 
             Console.WriteLine();
