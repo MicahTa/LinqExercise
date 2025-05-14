@@ -58,7 +58,7 @@ namespace LinqExercise
             special.ToList().ForEach(x => Console.WriteLine(x.FullName));
             
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
-            List<Employee> overTwentySix = employees.Where(x => x.Age > 26).OrderByDescending(x => x.FirstName).Reverse().ToList();
+            List<Employee> overTwentySix = employees.Where(x => x.Age > 26).OrderBy(x => x.FirstName).ToList();
             foreach (Employee i in overTwentySix) {
                 Console.Write($"{i.FirstName},{i.Age}\t");
             }
