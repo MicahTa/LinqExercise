@@ -9,34 +9,6 @@ namespace LinqExercise
     class Program
     {
         //Static array of integers
-        static void Display (int[] numbers) {
-            foreach (int i in numbers) {
-                Console.Write(i);
-                Console.Write("-");
-            }
-            Console.Write("\n");
-        }
-        static void Display (Employee[] numbers) {
-            foreach (Employee i in numbers) {
-                Console.Write(i);
-                Console.Write("-");
-            }
-            Console.Write("\n");
-        }
-        static void Display (List<Employee> numbers) {
-            foreach (Employee i in numbers) {
-                Console.Write(i.FirstName);
-                Console.Write("-");
-            }
-            Console.Write("\n");
-        }
-        static void Display (List<int> numbers) {
-            foreach (int i in numbers) {
-                Console.Write(i);
-                Console.Write("-");
-            }
-            Console.Write("\n");
-        }
         private static int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
 
         static void Main(string[] args)
@@ -57,32 +29,33 @@ namespace LinqExercise
             Console.WriteLine(numbers.Average());
 
             //TODO: Order numbers in ascending order and print to the console\
+
             Array.Sort(numbers);
-            Display(numbers);
+            numbers.ToList().ForEach(x => Console.WriteLine(x));
 
             //TODO: Order numbers in descending order and print to the console
             Array.Reverse(numbers);
-            Display(numbers);
+            numbers.ToList().ForEach(x => Console.WriteLine(x));
 
             //TODO: Print to the console only the numbers greater than 6
-            Display(numbers.Where(n => n > 6).ToList());
+            numbers.Where(n => n > 6).ToList().ForEach(x => Console.WriteLine(x));;
 
             //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
             Array.Sort(numbers);
-            Display(numbers.ToList().GetRange(0,4));
+            numbers.ToList().GetRange(0,4).ToList().ForEach(x => Console.WriteLine(x));;
 
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
-            numbers[3] = 10;
+            numbers[4] = 10;
             Array.Sort(numbers);
             Array.Reverse(numbers);
-            Display(numbers);
+            numbers.ToList().ForEach(x => Console.WriteLine(x));
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
 
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in ascending order by FirstName.
-            List<Employee> special = employees.Where(x => x.FirstName[0] == 'C' || x.FirstName[0] == 'S').OrderByDescending(x => x.FirstName).Reverse().ToList();
-            Display(employees);
+            List<Employee> special = employees.Where(x => x.FirstName[0] == 'C' || x.FirstName[0] == 'S').OrderBy(x => x.FirstName).ToList();
+            special.ToList().ForEach(x => Console.WriteLine(x.FullName));
             
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
             List<Employee> overTwentySix = employees.Where(x => x.Age > 26).OrderByDescending(x => x.FirstName).Reverse().ToList();
@@ -101,7 +74,7 @@ namespace LinqExercise
 
 
             //TODO: Add an employee to the end of the list without using employees.Add()
-            employees.AddRange(new List<Employee>() {(new Employee("Bob", "Ross", 25, 10))});
+            employees.AddRange(new List<Employee>() {new Employee("Bob", "Ross", 25, 10)});
 
 
             Console.WriteLine();
@@ -126,6 +99,6 @@ namespace LinqExercise
 
             return employees;
         }
-        #endregion
+        #endregion 
     }
 }
