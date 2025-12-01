@@ -75,6 +75,7 @@ namespace LinqExercise
 
             //TODO: Add an employee to the end of the list without using employees.Add()
             employees.AddRange(new List<Employee>() {new Employee("Bob", "Ross", 25, 10)});
+            employees.ForEach(x => Console.WriteLine(x.FullName));
 
 
             Console.WriteLine();
